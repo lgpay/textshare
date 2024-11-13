@@ -296,7 +296,7 @@ $note_name_escaped = htmlspecialchars($sanitized_note_name, ENT_QUOTES, 'UTF-8')
             <pre id="readonly-content" contenteditable="false" style="display: none;"><?php echo $note_content_escaped; ?></pre>
         </div>
         <div class="button-container">
-            <button id="toggle-mode">切换到编辑模式</button>
+            <button id="toggle-mode">编辑内容</button>
             <button id="copy-button">复制内容</button>
             <button id="copy-link-button">复制链接</button>
             <div id="qr-code-container"></div>
@@ -323,7 +323,7 @@ $note_name_escaped = htmlspecialchars($sanitized_note_name, ENT_QUOTES, 'UTF-8')
             // 根据模式设置初始显示状态
             if (isEditMode) {
                 textarea.style.display = 'block';
-                toggleButton.textContent = '切换到只读模式';
+                toggleButton.textContent = '锁定内容';
                 textarea.focus();
             } else {
                 readonlyContent.style.display = 'block';
@@ -335,13 +335,13 @@ $note_name_escaped = htmlspecialchars($sanitized_note_name, ENT_QUOTES, 'UTF-8')
                 if (isEditMode) {
                     readonlyContent.style.display = 'none';
                     textarea.style.display = 'block';
-                    toggleButton.textContent = '切换到只读模式';
+                    toggleButton.textContent = '锁定内容';
                     textarea.focus();
                 } else {
                     readonlyContent.textContent = textarea.value;
                     readonlyContent.style.display = 'block';
                     textarea.style.display = 'none';
-                    toggleButton.textContent = '切换到编辑模式';
+                    toggleButton.textContent = '编辑内容';
                 }
             });
 
