@@ -14,11 +14,14 @@ if (!$absolute_notes_directory || !is_dir($absolute_notes_directory)) {
 // 禁用缓存，以确保每次访问都获取最新的笔记内容
 header('Cache-Control: no-store');
 
+// 定义随机名称的字节长度（2 字节 => 4 位十六进制字符）
+$random_bytes_length = 2; // 2 字节 = 4 位十六进制字符
+
 // API 处理逻辑
 // 1. 新建随机地址文本，/?new&text=xxxx，返回新建文本的URL
 if (isset($_GET['new']) && isset($_GET['text'])) {
     // 生成随机名称
-    $random_note_name = bin2hex(random_bytes(3));
+    $random_note_name = bin2hex(random_bytes($random_bytes_length)); // 使用定义的字节长度
     $note_file_path = $absolute_notes_directory . DIRECTORY_SEPARATOR . $random_note_name;
 
     // 保存文本内容
@@ -71,8 +74,8 @@ if ($note_name && isset($_GET['text'])) {
 
 // 验证笔记名称的合法性（为空、长度超出限制或包含非法字符）
 if (!$note_name || strlen($note_name) > 64 || !preg_match('/^[a-zA-Z0-9_-]+$/', $note_name)) {
-    // 如果笔记名称不合法，生成一个随机名称（6个字节），并重定向到该新名称的页面
-    $random_note_name = bin2hex(random_bytes(3));
+    // 如果笔记名称不合法，生成一个随机名称（使用定义的字节长度），并重定向到该新名称的页面
+    $random_note_name = bin2hex(random_bytes($random_bytes_length)); // 使用定义的字节长度
     header("Location: /" . $random_note_name); // 重定向到没有查询参数的URL
     exit;
 }
